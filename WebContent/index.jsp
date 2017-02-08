@@ -9,24 +9,12 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/publicResources/js/jiaoben/css/font-awesome.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/publicResources/js/jiaoben/css/animate.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/publicResources/js/jiaoben/css/bootstrap-touch-slider.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/publicResources/css/index.css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/publicResources/js/jQuery/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/publicResources/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/publicResources/js/jiaoben/js/bootstrap-touch-slider.js"></script>
 <title>首页</title>
 
-<style type="text/css">
-.navbar-brand img{width: 96px;height: 23px;}
-#bootstrap-touch-slider{margin-top: 48px;}
-.jumbotron {margin-bottom: 0px;}
-.jumbotron .container .row .active{z-index: 100;border: 1px solid #00c1de;box-shadow: 0 0 20px rgba(0, 198, 226, 0.5);}
-.jumbotron .container .row .col-md-4{text-align: center;padding: 0px;}
-.jumbotron .container .row .col-md-4 .headed-bg{background-color: #e5e5e6;padding-bottom: 10px;}
-.jumbotron .container .row .active .headed-bg{background-color: #00c1de;padding-bottom: 10px;}
-.jumbotron .container .row .active p{color: #337ab7;cursor: pointer;}
-.jumbotron .container .row {border: 1px solid #dbdbdb;}
-.col-md-4-border{border-left:1px solid #dbdbdb;border-right: 1px solid #dbdbdb; }
-#bottom{background: #373D41;padding: 10px 0px;color: #fff;text-align: center;}
-</style>
 <script type="text/javascript">
 $('#bootstrap-touch-slider').bsTouchSlider(); //鼠标经过停止轮播
 $(function(){

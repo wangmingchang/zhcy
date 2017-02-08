@@ -1,0 +1,13 @@
+.navbar-brand img{height: 23px;}
+.nav li a{font-size: 20px;}
+.jumbotron {margin-bottom: 0px;}
+#content{background-image: url("/publicResources/images/banner/banner1.jpg");height: 430px;}
+#content .container .login-box{float: right;    background: #fff;border: 1px solid #fbfbfb;border-radius: 4px;height: 300px;margin: 40px;width: 350px;}
+.form-control{border-radius:0px;}
+.form-signin-p{text-align: center;margin-top: 10px;}
+.form-signin-input{text-align: center;margin-bottom: 10px;}
+.form-control{display: inline-block;width: 70%;}
+.glyphicon{top: 6px;left: 5px;font-size: 22px;padding:5px;border: 1px solid #ccc;}
+.checkbox{left: 38px;width: 80%;}
+.form-signin-btn{text-align: center;width: 80%;margin: auto;}
+#bottom{background: #f8f8f8;padding: 10px 0px;color: #333;text-align: center;}

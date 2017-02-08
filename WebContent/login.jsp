@@ -6,19 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/publicResources/js/bootstrap-3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/publicResources/css/login.css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/publicResources/js/jQuery/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/publicResources/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-<title>登录页面</title>
+<title>登录</title>
 
-<style type="text/css">
-.navbar-brand img{height: 40px;}
-.nav li a{font-size: 20px;}
-.jumbotron {margin-bottom: 0px;}
 
-#bottom{background: #373D41;padding: 10px 0px;color: #fff;text-align: center;}
-</style>
 <script type="text/javascript">
-$('#bootstrap-touch-slider').bsTouchSlider(); //鼠标经过停止轮播
 $(function(){
 	
 })
@@ -40,9 +34,31 @@ $(function(){
 	</nav>
    
 	<div id="content" class="jumbotron">
-      <div class="container">
-	      
-      </div>
+	    <div class="container">
+			<div class="login-box">
+		      <form class="form-signin">
+		       <div class="form-signin-p"><p>用户登录</p></div>
+		        <div class="form-signin-input">
+		          <label for="userName" class="glyphicon glyphicon-user"></label>
+		          <input id="userName" name="userName" class="form-control" placeholder="用户名/手机号/邮箱" required="" autofocus="" type="text">
+		       	</div>
+		       	<div class="form-signin-input">
+		          <label for="password" class="glyphicon glyphicon-lock"></label>
+		          <input id="password" name="password" class="form-control" placeholder="密码" required="" type="password">
+		        </div>
+		        <div class="checkbox">
+		          <label><input value="remember-me" type="checkbox"> 保持登录</label>
+		        </div>
+		        <div class="form-signin-btn">
+			        <button id="submit-btn" class="btn btn-lg btn-danger btn-block" type="button">登录</button>
+		        </div>
+		        <div class="checkbox">
+		          <a href="javascript:void(0)">忘记密码</a>
+		          <a href="javascript:void(0)" style="float: right;">免费注册</a>
+		        </div>
+		      </form>
+			</div>
+	    </div>
     </div>
     <div id="bottom" class="jumbotron">
 		<div class="container">
