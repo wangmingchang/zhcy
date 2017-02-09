@@ -1,5 +1,7 @@
 package com.wmc.web;
 
-public class LoginController {
 
+
+public class LoginController extends BaseContorller{
+	
 }
