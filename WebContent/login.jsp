@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/publicResources/css/login.css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/publicResources/js/jQuery/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/publicResources/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/publicResources/js/pc/login.js"></script>
 <title>登录</title>
 
 
