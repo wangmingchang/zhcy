@@ -1,7 +1,9 @@
 package com.wmc.service.impl;
 
 import java.io.File;
+import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
-import com.wmc.common.StringUtils;
 import com.wmc.service.PhotoService;
 @Service
 public class PhotoServiceImpl implements PhotoService {
@@ -23,7 +24,7 @@ public class PhotoServiceImpl implements PhotoService {
 			GridFS gridFS = new GridFS(mongoTemplate.getDb());
 			if(gridFS != null){
 				 GridFSInputFile gridFSInputFile = gridFS.createFile(file);
-				 id = StringUtils.getUUID();
+				 id = StringUtils.remove(UUID.randomUUID().toString(), "-");
 				 gridFSInputFile.setFilename(id);
 				 gridFSInputFile.save();
 			}

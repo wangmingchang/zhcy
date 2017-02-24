@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -22,7 +23,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.gridfs.GridFSDBFile;
-import com.wmc.common.StringUtils;
 import com.wmc.mongodb.MongodbClientTemplate;
 import com.wmc.pojo.Student;
 import com.wmc.service.StudentService;

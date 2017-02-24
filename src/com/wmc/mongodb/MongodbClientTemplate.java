@@ -1,7 +1,9 @@
 package com.wmc.mongodb;
 
 import java.io.File;
+import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
-import com.wmc.common.StringUtils;
 import com.wmc.redis.RedisClientTemplate;
 
 @Repository("mongodbClientTemplate")
@@ -51,7 +52,7 @@ public class MongodbClientTemplate {
 			
 			 gridFS = new GridFS(mongoTemplate.getDb()); 
 			 GridFSInputFile createFile = gridFS.createFile(file);
-			 id = StringUtils.getUUID();
+			 id = StringUtils.remove(UUID.randomUUID().toString(), "-");
 			 createFile.setFilename(id);;
 		} catch (Exception e) {
 			e.printStackTrace();
