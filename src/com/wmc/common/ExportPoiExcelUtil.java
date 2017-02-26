@@ -1,5 +1,6 @@
 package com.wmc.common;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -31,7 +32,18 @@ import org.apache.poi.hssf.util.HSSFColor;
 
 public class ExportPoiExcelUtil<T> {
 	
-	private static final Pattern p = Pattern.compile("^[0-9]+(.[0-9]*)?$");//是否是数字
+	private static Pattern p = Pattern.compile("^[0-9]+(.[0-9]*)?$");//是否是数字
+	private static HSSFFont fontStyle = null;   
+	private static  HSSFCellStyle cellStyle = null;  
+	
+	public void exportExcel(String title, String[] headers, Collection<T> dataset,  HttpServletResponse response) throws NoSuchMethodException, Exception{
+		exportExcel(title, headers, dataset, response.getOutputStream(), response, "yyyy-MM-dd");
+		
+	}
+	public void exportExcel(String title, String[] headers, Collection<T> dataset, OutputStream out, HttpServletResponse response) throws NoSuchMethodException, Exception{
+		exportExcel(title, headers, dataset, out, response, "yyyy-MM-dd");
+		
+	}
 	 
 	/** 
      * 这是一个通用的方法，利用了JAVA的反射机制，可以将放置在JAVA集合中并且符号一定条件的数据以EXCEL 的形式输出到指定IO设备上 
@@ -52,56 +64,35 @@ public class ExportPoiExcelUtil<T> {
 	 *  
      */
 	public void exportExcel(String title, String[] headers,
-			Collection<T> dataset, OutputStream out, HttpServletResponse response, String pattern) throws NoSuchMethodException, Exception {
+			Collection<T> dataset, OutputStream out, HttpServletResponse response, String pattern){
 		//声明一个工作薄
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		//生成一个表格
 		HSSFSheet sheet = workbook.createSheet(title);
 		//设置表格默认列宽度为15个字节  
 		sheet.setDefaultColumnWidth(15);
-		//设置样式
-		HSSFCellStyle style = workbook.createCellStyle();  
-        // 设置这些样式  
-        style.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);  
-        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);  
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);  
-        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);  
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);  
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);  
+        // 设置标题样式
+		HSSFCellStyle titleHssfCellStyle = getHssfCellStyle(workbook);
         // 生成一个字体  
-        HSSFFont font = workbook.createFont();  
-        font.setColor(HSSFColor.BLACK.index);  
-        font.setFontHeight((short)8);;  
-        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);  
+        HSSFFont titleHssfFont = getHssfFont(workbook);
         // 把字体应用到当前的样式  
-        style.setFont(font); 
-        
-        // 生成并设置另一个样式  
-        HSSFCellStyle style2 = workbook.createCellStyle();  
-        style2.setFillForegroundColor(HSSFColor.WHITE.index);  
-        style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);  
-        style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);  
-        style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
-        style2.setBorderRight(HSSFCellStyle.BORDER_THIN);  
-        style2.setBorderTop(HSSFCellStyle.BORDER_THIN);  
-        style2.setAlignment(HSSFCellStyle.ALIGN_CENTER);  
-        style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);  
-        // 生成另一个字体  
-        HSSFFont font2 = workbook.createFont(); 
-        font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);  
-        // 把字体应用到当前的样式  
-        style2.setFont(font2);
+        titleHssfCellStyle.setFont(titleHssfFont);
+       
+        //设置内容样式
+        HSSFFont contextFont = getHssfFont(workbook, (short)12);
+        HSSFCellStyle contextHssfCellStyle = getHssfCellStyle(workbook, (short) HSSFColor.WHITE.index, HSSFCellStyle.ALIGN_CENTER);
+        contextHssfCellStyle.setFont(contextFont);
+       
 		
         //设置表格标题行
         HSSFRow row = sheet.createRow(0);
         for (int i = 0; i < headers.length; i++) {
 			HSSFCell cell = row.createCell(i);
 			HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+			cell.setCellStyle(titleHssfCellStyle);
 			cell.setCellValue(text);
 		}
         try {
-			
         	//遍历集合数据，产生数据行
         	if (!StringUtils.isNotEmpty(pattern)) { pattern = "yyyy-MM-dd"; }
         	Iterator<T> it = (Iterator<T>) dataset.iterator();
@@ -114,7 +105,7 @@ public class ExportPoiExcelUtil<T> {
         		Field[] fields = t.getClass().getDeclaredFields();
         		for (int i = 0; i < fields.length; i++) {
         			HSSFCell cell = row.createCell(i);
-        			cell.setCellStyle(style2);
+        			cell.setCellStyle(contextHssfCellStyle);
         			Field field = fields[i];
         			String fileName = field.getName();
         			String getMethodName = "get" + fileName.substring(0, 1).toUpperCase() + fileName.substring(1);
@@ -141,11 +132,7 @@ public class ExportPoiExcelUtil<T> {
         					// 是数字当作double处理 
         					cell.setCellValue(Double.parseDouble((String) object));
         				} else {
-        					//设置字体样式
         					HSSFRichTextString richString = new HSSFRichTextString((String) object);
-        					HSSFFont font3 = workbook.createFont();  
-        					font3.setColor(HSSFColor.BLUE.index);  
-        					richString.applyFont(font3);  
         					cell.setCellValue(richString);
         				}
         			} 
@@ -163,12 +150,76 @@ public class ExportPoiExcelUtil<T> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			out.flush();
-			out.close();
+			try {
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-
-	public static void main(String[] args) throws Exception {
-		
+	
+	/***
+	 * 设置设置标题--字体样式(默认)
+	 * @param workbook
+	 * @return	HSSFFont
+	 */
+	public static HSSFFont getHssfFont(HSSFWorkbook workbook) {   
+		fontStyle = workbook.createFont();   
+		fontStyle.setFontName("宋体");   
+		fontStyle.setFontHeightInPoints((short)14);   //字体大小 
+		fontStyle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);   //字体加粗
+		return fontStyle;   
+	}  
+	/**
+	 * 自定义字体样式
+	 * @param workbook
+	 * @param height 字体大小
+	 * @param boldweight
+	 * @return
+	 */
+	public static HSSFFont getHssfFont(HSSFWorkbook workbook, short height) {   
+		fontStyle = workbook.createFont();   
+		fontStyle.setFontName("宋体");   
+		fontStyle.setFontHeightInPoints(height);   //字体大小 
+		return fontStyle;   
+	} 
+	
+	
+	/***
+	 * 设置标题--表格样式
+	 * @param workbook
+	 * @return HSSFCellStyle
+	 */
+	public static HSSFCellStyle  getHssfCellStyle(HSSFWorkbook workbook){
+		cellStyle = workbook.createCellStyle();  
+		cellStyle.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);  //背景颜色
+		cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);  
+		cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);  
+		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+		cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);  
+		cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);  //对齐方式
+		return cellStyle;
 	}
+	
+	/**
+	 * 自定义表格样式
+	 * @param workbook
+	 * @param bg	背景颜色
+	 * @param align 对齐方式
+	 * @return
+	 */
+	public static HSSFCellStyle  getHssfCellStyle(HSSFWorkbook workbook, short bg,short align ){
+		cellStyle = workbook.createCellStyle();  
+		cellStyle.setFillForegroundColor(bg);  //背景颜色
+		cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);  
+		cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);  
+		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+		cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);  
+		cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+		cellStyle.setAlignment(align);  
+		return cellStyle;
+	}
+	
 }
