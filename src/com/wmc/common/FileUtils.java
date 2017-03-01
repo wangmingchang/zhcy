@@ -154,7 +154,7 @@ public class FileUtils {
 	  
 	   */
 	  public static void down(String fileName,byte[] data,HttpServletResponse response){
-		  String name = EncoderUtils.encode(fileName, "UTF-8", true);
+		  String name = EncoderUtil.encode(fileName, "UTF-8", true);
 		  response.reset();  
 		  response.setHeader("Content-Disposition", "attachment; filename=\"" + name + "\""); 
 		  response.addHeader("Content-Length", "" + data.length);  
@@ -184,7 +184,7 @@ public class FileUtils {
 	  
 	   */
 	  public static void down(String path,String fileName,HttpServletResponse response){
-		  String name = EncoderUtils.encode(fileName, "UTF-8", true);
+		  String name = EncoderUtil.encode(fileName, "UTF-8", true);
 		   
 		  File file = null;
 		  InputStream in = null;

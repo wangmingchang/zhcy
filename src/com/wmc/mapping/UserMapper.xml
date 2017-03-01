@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wmc.dao.UserDao">
+
+	<!-- 映射关系 -->
+	<resultMap id="systemUserResultMap"	 type="com.wmc.pojo.User">
+		<id column="user_id"	jdbcType="VARCHAR" 	property="userId" 	javaType="String"/>
+		<result column="system_user_id"	jdbcType="VARCHAR" 	property="systemUserId" 	javaType="String"/>
+		<result column="real_name"	jdbcType="VARCHAR" 	property="realName" 	javaType="Integer"/>
+		<result column="type" 	jdbcType="VARCHAR" 	property="type" 	javaType="String"/>
+		<result column="company_id" 	jdbcType="VARCHAR" 	property="companyId" 	javaType="String"/>
+		<result column="address_id" 	jdbcType="VARCHAR" 	property="addressId" 	javaType="String"/>
+		<result column="photo_id" 	jdbcType="VARCHAR" 	property="photoId" 	javaType="String"/>
+		<result column="create_time" 	jdbcType="DATETIME" 	property="createTime" 	javaType="Date"/>
+		<result column="update_time" 	jdbcType="DATETIME" 	property="updateTime" 	javaType="Date"/>
+	</resultMap>
+	
+	
+	<!-- 新增数据 -->
+	<insert id="save"  parameterType="com.wmc.pojo.User">
+        <selectKey keyProperty="userId" keyColumn="user_id" resultType="String" order="BEFORE">  
+      	  select  replace(uuid(),'-','')   from dual  
+    	</selectKey>  
+		insert into user(user_id, system_user_id, type, create_time) 
+		values(#{userId}, #{system_user_id}, #{type}, #{createTime}) 
+	</insert>
+	
+	<!-- 修改数据 -->
+	<update id="update" parameterType="com.wmc.pojo.User">
+		update user 
+			<set>
+				<if test="userName != null"> system_user_id = #{systemUserId}, </if>
+				<if test="userMobilePhone != null"> real_name = #{realName}, </if>
+				<if test="password != null"> type = #{type}, </if>
+				<if test="password != null"> company_id = #{companyId}, </if>
+				<if test="password != null"> address_id = #{addressId}, </if>
+				<if test="password != null"> photo_id = #{photoId}, </if>
+				<if test="createTime != null"> create_time = #{createTime}, </if>
+				<if test="updateTime != null"> update_time = #{updateTime}, </if>
+			</set>
+			where user_id = #{userId} 
+	</update>
+	
+	<!--  删除数据 -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from user  where user_id = #{userId} 
+	</delete>
+	
+	<!-- 查询数据通过userName -->
+	<select id="getUserByName" parameterType="java.lang.String" resultMap="systemUserResultMap">
+		select s.* from system_user s where s.user_name = #{userName} 
+	</select>
+	
+	<!-- 查询数据通过userMobilePhone -->
+	<select id="getUserByPhone" parameterType="java.lang.String" resultMap="systemUserResultMap">
+		select s.* from system_user s where s.user_mobile_phone = #{userMobilePhone} 
+	</select>
+	
+	<!-- 查询数据通过userName和userMobilePhone,多个参数使用注解方式传入 -->
+	<!-- <select id="getUserByNameAndPhone"  resultMap="systemUserResultMap">
+		select s.* from system_user s where s.user_mobile_phone = #{userMobilePhone} 
+	</select> -->
+	
+	
+</mapper>

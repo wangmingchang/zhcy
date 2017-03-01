@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wmc.dao.SystemUserDao">
+
+	<!-- 映射关系 -->
+	<resultMap id="userResultMap"	 type="com.wmc.pojo.SystemUser">
+		<id column="system_user_id"	jdbcType="VARCHAR" 	property="systemUserId" 	javaType="String"/>
+		<result column="user_name"	jdbcType="VARCHAR" 	property="userName" 	javaType="String"/>
+		<result column="user_mobile_phone"	jdbcType="VARCHAR" 	property="userMobilePhone" 	javaType="Integer"/>
+		<result column="password" 	jdbcType="VARCHAR" 	property="password" 	javaType="String"/>
+		<result column="status" 	jdbcType="VARCHAR" 	property="status" 	javaType="String"/>
+		<result column="create_time" 	jdbcType="DATETIME" 	property="createTime" 	javaType="Date"/>
+		<result column="update_time" 	jdbcType="DATETIME" 	property="updateTime" 	javaType="Date"/>
+	</resultMap>
+	
+	
+	<!-- 新增数据 -->
+	<insert id="save"  parameterType="com.wmc.pojo.SystemUser">
+        <selectKey keyProperty="systemUserId" keyColumn="system_user_id" resultType="String" order="BEFORE">  
+      	  select  replace(uuid(),'-','')   from dual  
+    	</selectKey>  
+		insert into system_user(system_user_id, user_name, user_mobile_phone, password, status, create_time, update_time) 
+		values(#{systemUserId}, #{userName}, #{userMobilePhone}, #{password}, #{status}, #{createTime}, #{updateTime}) 
+	</insert>
+	
+	<!-- 修改数据 -->
+	<update id="update" parameterType="com.wmc.pojo.SystemUser">
+		update system_user 
+			<set>
+				<if test="userName != null"> user_name = #{userName}, </if>
+				<if test="userMobilePhone != null"> user_mobile_phone = #{userMobilePhone}, </if>
+				<if test="password != null"> password = #{password}, </if>
+				<if test="createTime != null"> create_time = #{createTime}, </if>
+				<if test="updateTime != null"> update_time = #{updateTime}, </if>
+			</set>
+			where system_user_id = #{systemUuserId} 
+	</update>
+	
+	<!--  删除数据 -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from system_user s where s.system_user_id = #{systemUserId} 
+	</delete>
+	
+	<!-- 查询数据通过主键 -->
+	<select id="getUserByPrimaryKey" parameterType="java.lang.String" resultMap="userResultMap">
+		select * from user s where user_id = #{user_id} 
+	</select>
+	
+</mapper>

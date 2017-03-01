@@ -2,21 +2,24 @@ package com.wmc.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+
 /**
  * 地址类
+ * 
  * @author wmc
  * @since 2017.02.09
  */
-public class Address implements Serializable{
+public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private String addressId;	//主键
-	private String locationId;	//AddressLocation的ID
-	private String addressDetail;	//地址详情
-	private Date createTime;	//创建时间
-	private String type;	//地址类型
-	
+
+	private String addressId; // 主键
+	private String locationId; // AddressLocation的ID
+	private String addressDetail; // 地址详情
+	private String type; // 地址类型
+	private Date createTime; // 创建时间
+	private Date updateTime;
+
 	public Address() {
 		super();
 	}
@@ -60,8 +63,13 @@ public class Address implements Serializable{
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
-	
-	
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
 }

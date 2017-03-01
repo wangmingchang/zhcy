@@ -8,12 +8,12 @@ import java.util.StringTokenizer;
  * @author WMC
  *
  */
-public class EncoderUtils {
+public class EncoderUtil {
 	 	private static boolean C_NEW_ENCODING_SUPPORTED = true;
 	    private static boolean C_NEW_DECODING_SUPPORTED = true;
 	    public static final String C_URI_ENCODING = "UTF-8";
 	    
-	    public EncoderUtils(){}
+	    public EncoderUtil(){}
 
 	    public static String encode(String source, String encoding, boolean fallbackToDefaultEncoding)
 	    {

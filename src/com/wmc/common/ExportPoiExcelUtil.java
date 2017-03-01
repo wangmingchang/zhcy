@@ -33,8 +33,8 @@ import org.apache.poi.hssf.util.HSSFColor;
 public class ExportPoiExcelUtil<T> {
 	
 	private static Pattern p = Pattern.compile("^[0-9]+(.[0-9]*)?$");//是否是数字
-	private static HSSFFont fontStyle = null;   
-	private static  HSSFCellStyle cellStyle = null;  
+	private static HSSFFont fontStyle = null;   //字体样式					
+	private static  HSSFCellStyle cellStyle = null;  //表格样式
 	
 	public void exportExcel(String title, String[] headers, Collection<T> dataset,  HttpServletResponse response) throws NoSuchMethodException, Exception{
 		exportExcel(title, headers, dataset, response.getOutputStream(), response, "yyyy-MM-dd");
@@ -73,15 +73,10 @@ public class ExportPoiExcelUtil<T> {
 		sheet.setDefaultColumnWidth(15);
         // 设置标题样式
 		HSSFCellStyle titleHssfCellStyle = getHssfCellStyle(workbook);
-        // 生成一个字体  
-        HSSFFont titleHssfFont = getHssfFont(workbook);
-        // 把字体应用到当前的样式  
-        titleHssfCellStyle.setFont(titleHssfFont);
        
         //设置内容样式
-        HSSFFont contextFont = getHssfFont(workbook, (short)12);
-        HSSFCellStyle contextHssfCellStyle = getHssfCellStyle(workbook, (short) HSSFColor.WHITE.index, HSSFCellStyle.ALIGN_CENTER);
-        contextHssfCellStyle.setFont(contextFont);
+        HSSFCellStyle contextHssfCellStyle = getHssfCellStyle(workbook, (short) HSSFColor.WHITE.index, 
+        		HSSFCellStyle.ALIGN_CENTER, (short)12, HSSFFont.BOLDWEIGHT_NORMAL);
        
 		
         //设置表格标题行
@@ -160,34 +155,7 @@ public class ExportPoiExcelUtil<T> {
 	}
 	
 	/***
-	 * 设置设置标题--字体样式(默认)
-	 * @param workbook
-	 * @return	HSSFFont
-	 */
-	public static HSSFFont getHssfFont(HSSFWorkbook workbook) {   
-		fontStyle = workbook.createFont();   
-		fontStyle.setFontName("宋体");   
-		fontStyle.setFontHeightInPoints((short)14);   //字体大小 
-		fontStyle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);   //字体加粗
-		return fontStyle;   
-	}  
-	/**
-	 * 自定义字体样式
-	 * @param workbook
-	 * @param height 字体大小
-	 * @param boldweight
-	 * @return
-	 */
-	public static HSSFFont getHssfFont(HSSFWorkbook workbook, short height) {   
-		fontStyle = workbook.createFont();   
-		fontStyle.setFontName("宋体");   
-		fontStyle.setFontHeightInPoints(height);   //字体大小 
-		return fontStyle;   
-	} 
-	
-	
-	/***
-	 * 设置标题--表格样式
+	 * 设置标题--表格样式(默认)
 	 * @param workbook
 	 * @return HSSFCellStyle
 	 */
@@ -200,6 +168,11 @@ public class ExportPoiExcelUtil<T> {
 		cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);  
 		cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);  
 		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);  //对齐方式
+		fontStyle = workbook.createFont();   
+		fontStyle.setFontName("宋体");   
+		fontStyle.setFontHeightInPoints((short)14);   //字体大小 
+		fontStyle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);   //字体加粗
+		cellStyle.setFont(fontStyle);
 		return cellStyle;
 	}
 	
@@ -208,9 +181,11 @@ public class ExportPoiExcelUtil<T> {
 	 * @param workbook
 	 * @param bg	背景颜色
 	 * @param align 对齐方式
+	 * @param height 字体大小
+	 * @param boldweight 字体加粗
 	 * @return
 	 */
-	public static HSSFCellStyle  getHssfCellStyle(HSSFWorkbook workbook, short bg,short align ){
+	public static HSSFCellStyle  getHssfCellStyle(HSSFWorkbook workbook, short bg,short align, short height, short boldweight){
 		cellStyle = workbook.createCellStyle();  
 		cellStyle.setFillForegroundColor(bg);  //背景颜色
 		cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);  
@@ -218,7 +193,12 @@ public class ExportPoiExcelUtil<T> {
 		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
 		cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);  
 		cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);  
-		cellStyle.setAlignment(align);  
+		cellStyle.setAlignment(align); 
+		fontStyle = workbook.createFont();   
+		fontStyle.setFontName("宋体");   
+		fontStyle.setFontHeightInPoints((short)height);   //字体大小 
+		fontStyle.setBoldweight(boldweight);   //字体加粗
+		cellStyle.setFont(fontStyle);
 		return cellStyle;
 	}
 	

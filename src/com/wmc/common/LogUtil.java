@@ -3,7 +3,7 @@ package com.wmc.common;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-public class LogUtils {
+public class LogUtil {
 	private static final Level INFO;
 	private static final Level DEBUG;
 	private static final Level WARN;
@@ -18,7 +18,7 @@ public class LogUtils {
 		ERROR = Level.ERROR;
 		ALARM = Level.FATAL;
 	}
-	public LogUtils() {}
+	public LogUtil() {}
 
 	private static void printLog(String logMessage, Level errorLevel,
 			Throwable e) {

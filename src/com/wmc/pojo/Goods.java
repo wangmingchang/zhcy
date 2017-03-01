@@ -1,6 +1,7 @@
 package com.wmc.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 商品类
@@ -19,6 +20,8 @@ public class Goods implements Serializable{
 	private String goodsStatus;		//商品状态
 	private String goodsImageId;	//商品图片ID
 	private Double price;			//价格（单价）
+	private Date createTime;
+	private Date updateTime;
 	
 	public Goods() {
 		super();
@@ -86,6 +89,22 @@ public class Goods implements Serializable{
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 	
