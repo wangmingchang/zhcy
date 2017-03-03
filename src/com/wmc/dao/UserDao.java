@@ -1,7 +1,5 @@
 package com.wmc.dao;
 
-import org.springframework.stereotype.Repository;
-
 import com.wmc.pojo.User;
 /**
  * 用户DAO
@@ -9,7 +7,6 @@ import com.wmc.pojo.User;
  * @since 2016.03.01
  *
  */
-@Repository
 public interface UserDao {
 	/**
 	 * 新增数据

@@ -1,7 +1,5 @@
 package com.wmc.dao;
 
-import org.springframework.stereotype.Repository;
-
 import com.wmc.pojo.SystemUser;
 /**
  * 系统用户DAO
@@ -9,7 +7,7 @@ import com.wmc.pojo.SystemUser;
  * @since 2016.03.01
  *
  */
-@Repository
+
 public interface SystemUserDao {
 	/**
 	 * 新增数据
@@ -29,6 +27,12 @@ public interface SystemUserDao {
 	 * @return int
 	 */
 	int delete(String systemUserId);
+	/**
+	 * 查询数据通过主键
+	 * @param systemUserId
+	 * @return SystemUser
+	 */
+	SystemUser getUserByPrimaryKey(String systemUserId);
 	/**
 	 * 查询数据通过userName 
 	 * @param userName

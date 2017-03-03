@@ -1,9 +1,9 @@
-package com.wmc.mapping;
+package com.wmc.dao;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import com.wmc.pojo.Student;
-@Repository
+
 public interface StudentMapper {
 	
 	int addStudent(Student student);
@@ -13,4 +13,6 @@ public interface StudentMapper {
 	int modifyStudent(Student student);
 
 	int delStudent(String name);
+	
+	List<Student> list();
 }

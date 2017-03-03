@@ -1,15 +1,19 @@
 package com.wmc.service.impl;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mongodb.Mongo;
-import com.wmc.mapping.StudentMapper;
+import com.wmc.dao.StudentMapper;
 import com.wmc.pojo.Student;
+import com.wmc.service.PhotoService;
 import com.wmc.service.StudentService;
 
 @Service
@@ -20,7 +24,7 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private MongoTemplate mongoTemplate; 
 	@Autowired
-	private PhotoServiceImpl photoServiceImpl;
+	private PhotoService photoService;
 
 	@Override
 	@Transactional
@@ -63,7 +67,7 @@ public class StudentServiceImpl implements StudentService {
 		try {
 
 			File file = new File(path);
-			 id = photoServiceImpl.saveFile(file);
+			 id = photoService.saveFile(file);
 			
 			
 			System.out.println("****************"+id+"***************");
@@ -79,4 +83,16 @@ public class StudentServiceImpl implements StudentService {
 		return path;
 		
 	}
+
+	@Override
+	public List<Student> list() {
+		
+		PageHelper.startPage(1, 10);
+		List<Student> list = studentMapper.list();
+		PageInfo page = new PageInfo(list);
+		 list = page.getList();
+		return list;
+	}
+	
+	
 }

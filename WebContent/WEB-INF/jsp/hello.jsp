@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"	%>
-<%@ taglib  uri="http://java.sun.com/jstl/core" prefix="c" %> 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -153,7 +153,12 @@ function delImage(id){
 	<div style="height: 50px;">
 			<a href="javascript:void(0)"  style="padding: 5px 15px;background: orange;text-decoration: none;margin-top: 10px;" onclick="delImage('3d70556ae34a42c2872f36127f88e5a9')">删除图片</a>
 	</div>
-	
+	<div>
+		
+		<c:forEach items="${list}" var="student" >
+			<div>${student.name}&nbsp;&nbsp;${student.sex}&nbsp;&nbsp;${student.fatherName}</div>
+		</c:forEach>
+	</div>
 	
 	
 </body>

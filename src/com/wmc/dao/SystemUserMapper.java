@@ -1,6 +1,4 @@
-package com.wmc.mapping;
-
-import org.springframework.stereotype.Repository;
+package com.wmc.dao;
 
 import com.wmc.pojo.SystemUser;
 /**
@@ -9,7 +7,7 @@ import com.wmc.pojo.SystemUser;
  * @since 2016.03.01
  *
  */
-@Repository
+
 public interface SystemUserMapper {
 	/**
 	 * 保存SystemUser对象

@@ -12,8 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.wmc.pojo.Student;
+import com.wmc.service.PhotoService;
 import com.wmc.service.StudentService;
-import com.wmc.service.impl.PhotoServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 // @ContextConfiguration(locations="classpath:applicationContext-*.xml")
@@ -25,7 +25,7 @@ public class MonogDBTest {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	@Autowired
-	private PhotoServiceImpl photoServiceImpl;
+	private PhotoService photoServiceImpl;
 	
 	
 

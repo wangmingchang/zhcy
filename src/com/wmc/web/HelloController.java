@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,13 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.wmc.mongodb.MongodbClientTemplate;
 import com.wmc.pojo.Student;
+import com.wmc.service.PhotoService;
 import com.wmc.service.StudentService;
-import com.wmc.service.impl.PhotoServiceImpl;
 
 @Controller
 @RequestMapping("helloController")
@@ -38,13 +40,18 @@ public class HelloController {
 	@Autowired
 	private MongodbClientTemplate mongoTemplate; 
 	@Autowired
-	private PhotoServiceImpl photoServiceImpl;
+	private PhotoService photoServiceImpl;
 
 	@RequestMapping("hello")
-	public String helle(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView helle() {
 		String msg = "这个一个Controller类返回的信息";
-		request.setAttribute("msg", msg);
-		return "hello";
+		ModelAndView mac = new ModelAndView("hello");
+		List<Student> list = studentService.list();
+		
+		
+		mac.addObject("list", list);
+		mac.addObject("msg", msg);
+		return mac;
 	}
 
 	// 保存

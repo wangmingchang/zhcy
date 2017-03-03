@@ -41,7 +41,7 @@ $(function(){
             <li><a href="javascript:void(0)">渠道</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="${pageContext.request.contextPath}/login.jsp" >登录</a></li>
+            <li><a href="${pageContext.request.contextPath}/LoginController/redirectLoginPage.action" >登录</a></li>
             <li><a href="javascript:void(0)" >加入我们</a></li>
       
           </ul>

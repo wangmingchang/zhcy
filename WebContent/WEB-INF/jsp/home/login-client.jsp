@@ -39,6 +39,7 @@ $(function(){
 			<div class="login-box">
 		      <form class="form-signin">
 		       <div class="form-signin-p"><p>用户登录</p></div>
+		       	<input type="hidden" value="${uuid}" />
 		        <div class="form-signin-input">
 		          <label for="userName" class="glyphicon glyphicon-user"></label>
 		          <input id="userName" name="userName" class="form-control" placeholder="用户名/手机号/邮箱" required="" autofocus="" type="text">
@@ -55,7 +56,7 @@ $(function(){
 		        </div>
 		        <div class="checkbox">
 		          <a href="javascript:void(0)">忘记密码</a>
-		          <a href="javascript:void(0)" style="float: right;">免费注册</a>
+		          <a href="${pageContext.request.contextPath}/RegisterController/redirectRegisterPage.action" style="float: right;">免费注册</a>
 		        </div>
 		      </form>
 			</div>

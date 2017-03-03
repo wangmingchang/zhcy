@@ -9,14 +9,14 @@
 		<result column="user_mobile_phone"	jdbcType="VARCHAR" 	property="userMobilePhone" 	javaType="Integer"/>
 		<result column="password" 	jdbcType="VARCHAR" 	property="password" 	javaType="String"/>
 		<result column="status" 	jdbcType="VARCHAR" 	property="status" 	javaType="String"/>
-		<result column="create_time" 	jdbcType="DATETIME" 	property="createTime" 	javaType="Date"/>
-		<result column="update_time" 	jdbcType="DATETIME" 	property="updateTime" 	javaType="Date"/>
+		<result column="create_time" 	jdbcType="DATE" 	property="createTime" 	javaType="Date"/>
+		<result column="update_time" 	jdbcType="DATE" 	property="updateTime" 	javaType="Date"/>
 	</resultMap>
 	
 	
 	<!-- 新增数据 -->
 	<insert id="save"  parameterType="com.wmc.pojo.SystemUser">
-        <selectKey keyProperty="systemUserId" keyColumn="system_user_id" resultType="String" order="BEFORE">  
+        <selectKey keyProperty="systemUserId" resultType="String" order="BEFORE">  
       	  select  replace(uuid(),'-','')   from dual  
     	</selectKey>  
 		insert into system_user(system_user_id, user_name, user_mobile_phone, password, status, create_time, update_time) 
@@ -43,7 +43,17 @@
 	
 	<!-- 查询数据通过主键 -->
 	<select id="getUserByPrimaryKey" parameterType="java.lang.String" resultMap="userResultMap">
-		select * from user s where user_id = #{user_id} 
+		select * from system_user  where system_user_id = #{systemUserId} 
+	</select>
+	
+	<!-- 查询数据通过userName -->
+	<select id="getUserByName" parameterType="java.lang.String" resultMap="userResultMap">
+		select s.* from system_user s where s.user_name = #{userName} 
+	</select>
+	
+	<!-- 查询数据通过userMobilePhone -->
+	<select id="getUserByPhone" parameterType="java.lang.String" resultMap="userResultMap">
+		select s.* from system_user s where s.user_mobile_phone = #{userMobilePhone} 
 	</select>
 	
 </mapper>

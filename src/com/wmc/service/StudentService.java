@@ -1,5 +1,7 @@
 package com.wmc.service;
 
+import java.util.List;
+
 import com.wmc.pojo.Student;
 
 public interface StudentService {
@@ -16,4 +18,5 @@ public interface StudentService {
 
 	String showImg(String path);   
 	
+	List<Student> list();
 }

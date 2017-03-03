@@ -26,7 +26,7 @@
    mongodb.properties
    配置文件 -->
   <context:property-placeholder location="classpath:jdbc.properties,classpath:redis.properties,classpath:mongodb.properties" />
-<!--     <bean id="configRealm" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+     <bean id="configRealm" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
           <property name="locations">
              <list>
                  <value>classpath:jdbc.properties</value>
@@ -37,7 +37,7 @@
    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
           <property name="properties" ref="configRealm"/>
    </bean>
-   -->
+  
    <!-- 配置dataSource -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"	 init-method="init" 	destroy-method="close">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
@@ -73,25 +73,54 @@
    <!-- 配置sqlSessionFactory -->
   <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="mapperLocations" value="classpath:com/wmc/mapping/*.xml"/>
+		<property name="configLocation" value="classpath:/mybatis-config.xml" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations">
+			<list>
+				<!-- 在com.wmc.mapper包或以下所有目录中所有以.xml结尾的文件 -->
+				<value>classpath:com/wmc/mapping/*.xml</value>
+			</list>
+		</property>
 	</bean>
-  
   
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
     <!-- 扫描mybatis的mapper接口 -->
-  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-   		 <property name="basePackage"		value="com.wmc.mapping" />
-  </bean>
+  	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+   		 <property name="basePackage"		value="com.wmc.dao" />
+ 	 </bean>
   
   
 	<!-- 配置事务管理器 -->
-	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	<!-- 事务操作 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>  
+			<tx:method name="insert*" propagation="REQUIRED" />  
+			<tx:method name="update*" propagation="REQUIRED" />  
+			<tx:method name="edit*" propagation="REQUIRED" />  
+			<tx:method name="save*" propagation="REQUIRED" />  
+			<tx:method name="add*" propagation="REQUIRED" />  
+			<tx:method name="new*" propagation="REQUIRED" />  
+			<tx:method name="set*" propagation="REQUIRED" />  
+			<tx:method name="remove*" propagation="REQUIRED" />  
+			<tx:method name="delete*" propagation="REQUIRED" />  
+			<tx:method name="change*" propagation="REQUIRED" />  
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />  
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />  
+			<tx:method name="load*" propagation="REQUIRED" read-only="true" />  
+			<tx:method name="*" propagation="REQUIRED" read-only="true" />  
+		</tx:attributes>  
+	</tx:advice>
+	
+	<aop:config>  
+		<aop:pointcut id="serviceOperation" expression="execution(* com.wmc.service.impl.*.*(..))" />  
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />  
+	</aop:config>
 
 	  <!-- 使用annotation定义事务 -->
-    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true" />
+<!--     <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true" /> -->
 	
    <import resource="spring-redis.xml"/> 
    <import resource="spring-mongodb.xml"/> 

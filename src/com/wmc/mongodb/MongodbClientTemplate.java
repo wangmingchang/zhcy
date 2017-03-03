@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +17,6 @@ import com.wmc.redis.RedisClientTemplate;
 public class MongodbClientTemplate {
 	
 	private static final Logger log = Logger.getLogger(RedisClientTemplate.class);
-	@Autowired
 	private MongoTemplate mongoTemplate;
 	
 	public MongodbClientTemplate(){}
@@ -105,4 +103,14 @@ public class MongodbClientTemplate {
 		return flag;
 
 	}
+
+
+	public MongoTemplate getMongoTemplate() {
+		return mongoTemplate;
+	}
+	public void setMongoTemplate(MongoTemplate mongoTemplate) {
+		this.mongoTemplate = mongoTemplate;
+	}
+	
+	
 }
