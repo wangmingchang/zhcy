@@ -4,6 +4,7 @@
 /log4j.properties
 /mongodb.properties
 /mybatis-config.xml
+/properties/
 /redis.properties
 /spring-mongodb.xml
 /spring-redis.xml

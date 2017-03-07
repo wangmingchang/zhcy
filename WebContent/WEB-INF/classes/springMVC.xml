@@ -27,25 +27,27 @@
     <!-- 静态资源处理， css， js， imgs -->
     <mvc:resources location="/,classpath:/META-INF/publicResources/"  	mapping="/resources/**"	  />
  
-    <!-- 配置ViewResolver。 可以用多个ViewResolver。 使用order属性排序。 InternalResourceViewResolver放在最后。 -->
-    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="order" value="1" />
-        <property name="mediaTypes">
-            <map>
-                <entry key="json" value="application/json" />
-                <entry key="xml" value="application/xml" />
-                <entry key="htm" value="text/html" />
-            </map>
-        </property>
-
-        <property name="defaultViews">
-            <list>
-                <!-- JSON View -->
-                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
-            </list>
-        </property>
-        <property name="ignoreAcceptHeader" value="true" />
-    </bean>
+    <!-- 配置ViewResolver。 可以用多个ViewResolver。 InternalResourceViewResolver放在最后。 -->
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">  
+	   <property name="mediaTypes">  
+	      <value>  
+	         html=text/html  
+	         json=application/json  
+	         json=application/callback  
+	         image=image/*  
+	      </value>  
+	   </property>  
+	   <property name="defaultContentType" value="text/html"/>  
+	</bean>  
+	  
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">  
+	   <property name="contentNegotiationManager" ref="contentNegotiationManager"/>  
+	   <property name="defaultViews">  
+	      <list>  
+	         <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />  
+	      </list>  
+	   </property>  
+	</bean>  
 
     
 

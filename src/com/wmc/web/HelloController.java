@@ -2,7 +2,6 @@ package com.wmc.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -24,8 +22,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mongodb.gridfs.GridFSDBFile;
-import com.wmc.mongodb.MongodbClientTemplate;
 import com.wmc.pojo.Student;
 import com.wmc.service.PhotoService;
 import com.wmc.service.StudentService;
@@ -37,8 +33,7 @@ public class HelloController {
 	@Autowired
 	private StudentService studentService;
 	
-	@Autowired
-	private MongodbClientTemplate mongoTemplate; 
+	//private MongodbClientTemplate mongoTemplate; 
 	@Autowired
 	private PhotoService photoServiceImpl;
 
@@ -151,7 +146,7 @@ public class HelloController {
 		String uploadImage = studentService.uploadImage(filePath);
 		response.getWriter().print(uploadImage);
 	}
-	
+	/**
 	@RequestMapping(value = "showImg")  
     public void show(HttpServletRequest request, HttpServletResponse response) throws IOException {  
 		
@@ -170,8 +165,8 @@ public class HelloController {
       out.flush();  
       out.close();
           
-    }  
-	
+    }  */
+	/**
 	@RequestMapping(value = "delImage")  
     public void delImage(HttpServletRequest request, HttpServletResponse response) throws IOException {  
 		String msg = "删除失败";
@@ -190,6 +185,6 @@ public class HelloController {
 		response.getWriter().print(msg);
 		
 	}
-	
+	*/
 	
 }

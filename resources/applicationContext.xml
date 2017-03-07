@@ -25,12 +25,11 @@
    redis.propertory; 
    mongodb.properties
    配置文件 -->
-  <context:property-placeholder location="classpath:jdbc.properties,classpath:redis.properties,classpath:mongodb.properties" />
+<!--   <context:property-placeholder location="classpath:jdbc.properties,classpath:redis.properties,classpath:mongodb.properties" /> -->
      <bean id="configRealm" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
           <property name="locations">
              <list>
-                 <value>classpath:jdbc.properties</value>
-                 <value>classpath:redis.properties</value>
+                 <value>classpath:*.properties</value>
              </list>
          </property>
     </bean> 
@@ -123,6 +122,6 @@
 <!--     <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true" /> -->
 	
    <import resource="spring-redis.xml"/> 
-   <import resource="spring-mongodb.xml"/> 
+  <!--  <import resource="spring-mongodb.xml"/>  -->
 
 </beans>

@@ -1,10 +1,8 @@
 package com.wmc.service.impl;
 
-import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +19,8 @@ public class StudentServiceImpl implements StudentService {
 	
 	@Autowired
 	private StudentMapper studentMapper;
-	@Autowired
-	private MongoTemplate mongoTemplate; 
+	//@Autowired
+	//private MongoTemplate mongoTemplate; 
 	@Autowired
 	private PhotoService photoService;
 
@@ -65,9 +63,9 @@ public class StudentServiceImpl implements StudentService {
         Mongo mongo = null;
         String id = null;
 		try {
-
+/*
 			File file = new File(path);
-			 id = photoService.saveFile(file);
+			 id = photoService.saveFile(file);*/
 			
 			
 			System.out.println("****************"+id+"***************");
